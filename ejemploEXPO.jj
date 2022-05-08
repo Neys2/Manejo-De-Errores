@@ -37,11 +37,7 @@ TOKEN:
 {   
 <INICIO: "compilar_coatl"> {System.out.println("INICIO  --> "+image);}  
 |<FIN: "ejecutar_coatl">  {System.out.println("FIN  --> "+image);}  
-|<IF: "decide"> {System.out.println("IF  --> "+image+"\r\n");}  
-|<ELSE: "sino"> {System.out.println("ELSE  --> "+image+"\r\n");}  
-|<CicloIterado: "repito hasta que">{System.out.println("CICLO ITERADO  --> "+image+"\r\n");}  
-|<CicloLimit: "repito"> {System.out.println("CICLO LIMITE --> "+image+"\r\n");}
-|<CicloWhile: "mientras"> {System.out.println("CICLO WHILE --> "+image+"\r\n");} 
+
 |<ESCRIBIR: "muestra">{System.out.println("PRINT --> "+image+"\r\n");}
 |<LEER:"recibir">{System.out.println("SCAN_DATA --> "+image+"\r\n");} 
 }  
@@ -59,23 +55,7 @@ TOKEN:
 TOKEN:  
 {  
 <ASIGNACION: ":"> {System.out.println("Asignacion de valor -->"+image);}
-|<MENOR: "<"> {System.out.println("MENOR QUE --> "+image);} 
-|<MAYOR: ">"> {System.out.println("MAYOR QUE --> "+image);}
-|<MENOR_IGUAL: "<="> {System.out.println("MENOR O IGUAL -->"+image);}
-|<MAYOR_IGUAL: ">="> {System.out.println("MAYOR O IGUAL -->"+image);}
-|<IGUALDAD: "="> {System.out.println("IGUAL --> "+image);}
-|<OR: "|"> {System.out.println("OR --> "+image);} 
-|<AND: "&"> {System.out.println("AND --> "+image);}
-|<NOT: "!="> {System.out.println("NOT --> "+image);}
-|<MAS: "+"> {System.out.println("SIGNO MAS --> "+image);} 
-|<MENOS: "-"> {System.out.println("SIGNO MENOS --> "+image);}
-|<DIV: "/"> {System.out.println("SIGNO DIVISION --> "+image);} 
-|<MODULO: "%"> {System.out.println("SIGNO MODULO --> "+image);} 
-|<MULTI: "*"> {System.out.println("SIGNO MULTIPLICACION --> "+image);}
 }   
-// [("E_")(["a"-"z"|"A"-"Z"|"_"|"0"-"9"])+]  
-//"E_"(["A"-"Z","a"-"z"](["A"-"Z","a"-"z","0"-"9"])*)  
-// NOT ~ 
 
 TOKEN: 
 {
@@ -84,13 +64,7 @@ TOKEN:
 
 TOKEN: 
 { 
-<ENTERO: "E_">{System.out.println("ENTERO --> "+image+"\r\n");} 
-|<FLOTANTE: "D_">{System.out.println("FLOAT/DECIMAL --> "+image+"\r\n");} 
-|<NUMERO: (["0"-"9"])+>{System.out.println("NUMERO ENTERO --> "+image+"\r\n");}  
-|<NUMDECIMAL: (["0"-"9"])+ "." (["0"-"9"])+ | (["0"-"9"])+ "." | "." (["0"-"9"])+>{System.out.println("NUMERO DECIMAL --> "+image+"\r\n");} 
-|<ID_CADENA: "C_">{System.out.println("STRING --> "+image+"\r\n");} 
-|<BOOLEANO: "L_">{System.out.println("BOOLEANO --> "+image+"\r\n");} 
-|<EST_LOGIC:("falso"|"verdad")>{System.out.println("ESTADO LOGICO --> "+image+"\r\n");} 
+   <ID_CADENA: "C_">{System.out.println("STRING --> "+image+"\r\n");} 
 }   
 
 TOKEN: 
@@ -150,49 +124,19 @@ LOOKAHEAD(2)
 
 void Declaracion():{}
 {  
-  Variable_dato() 
-	<IDENTIFICADOR> (
-	  <PuntoComa> 
-	| <ASIGNACION>  AsignacionD())  
+  Variable_dato() <IDENTIFICADOR> <ASIGNACION>  <CADENAS> <PuntoComa>  
 } 
 
-void AsignacionD():{} 
-{  
-	<LEER> <PuntoComa>
-	| Expresion() 
-} 
-void Asignacion():{} 
-{  <IDENTIFICADOR> <ASIGNACION> ( <LEER> <PuntoComa>
-								  | Expresion() )
-} 
-void Expresion():{} 
-{  LOOKAHEAD(2)
-   <MENOS>( (<NUMERO> |<NUMDECIMAL>) | <IDENTIFICADOR>)
-    (     <PuntoComa>
-   	    | Expresion() )
-| (DataType() | <IDENTIFICADOR>)(
-		<PuntoComa>
-		| Operadores() Expresion() ) 
-//|  Parentesis()
-} 
-
+  
+ 
 void mostrar():{}
 {
-    <ESCRIBIR> <ASIGNACION> <ParenIzq> <IDENTIFICADOR><ParenDer>
+    <ESCRIBIR>  <ParenIzq> <IDENTIFICADOR> <ParenDer> <PuntoComa>
 }
 
 void DataType():{} 
 { //Tipos de datos  
 <NUMERO> |<NUMDECIMAL> | <EST_LOGIC>|<CADENAS> 
-} 
-
-void Operadores():{} 
-{ //Operadores para expresiones matematicas
- <MAS> 
-|<MENOS>  
-|<DIV> 
-|<MODULO>   
-|<MULTI>   
 } 
 
 void Variable_dato():{} 
