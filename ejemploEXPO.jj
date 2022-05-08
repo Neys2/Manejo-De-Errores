@@ -1,0 +1,118 @@
+options { 
+
+	JAVA_UNICODE_ESCAPE = true; 
+	KEEP_LINE_COLUMN = true; 
+	STATIC = false; 
+} 
+
+PARSER_BEGIN(ejemploEXPO) 
+public class ejemploEXPO {  
+	String errormsg="\n";  
+	public static void main(String args[])  { 
+		ejemploEXPO  compilador = new ejemploEXPO (System.in); 
+		try { 
+			compilador.Codigo(); 
+		}catch( Exception e ){   
+			System.out.println( "Expresión no válida" );
+		}
+		catch( TokenMgrError e ) { 
+			System.out.println( "Error de Token" );
+		} 
+		System.out.println(compilador.errormsg);
+		 System.out.println("An"+"\u00e1"+"lisis l"+"\u00e9"+"xico ejecutado con "+"\u00e9"+"xito");  
+	}    
+}   
+PARSER_END(ejemploEXPO)
+
+
+TOKEN:   
+{   
+<INICIO: "compilar_coatl"> {System.out.println("INICIO  --> "+image);}
+|<FIN: "ejecutar_coatl">  {System.out.println("FIN  --> "+image);} 
+|<ESCRIBIR: "muestra">{System.out.println("PRINT --> "+image+"\r\n");}
+|<LEER:"recibir">{System.out.println("SCAN_DATA --> "+image+"\r\n");} 
+}
+
+TOKEN:   
+{ 
+<ASIGNACION: ":"> {System.out.println("Asignacion de valor -->"+image);}  
+|<ParenIzq: "("> {System.out.println("Parentesis Izquierdo --> "+image);} 
+|<ParenDer: ")"> {System.out.println("Parentesis Derecho --> "+image);}
+|<SepIzq: "{"> {System.out.println("Delimitador Izquierdo --> "+image);} 
+|<SepDer: "}"> {System.out.println("Delimitador Derecho --> "+image);} 
+|<PuntoComa: ";"> {System.out.println("PUNTO Y COMA --> "+image);}
+}  
+
+TOKEN:
+{
+	<CADENAS: ("\""(~["\"","#","\n","\r","#","#","\r","\n"])*"\"")>{System.out.println("CADENA DE TEXTO --> "+image+"\r\n");}
+}
+
+TOKEN: 
+{
+    <IDENTIFICADOR:["A"-"Z","a"-"z"](["A"-"Z","a"-"z","0"-"9"])*>{System.out.println("IDENTIFICADOR --> "+image+"\r\n");}
+}
+TOKEN:
+{
+	<ID_CADENA: "C_">{System.out.println("STRING --> "+image+"\r\n");}
+}
+
+
+
+void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
+{
+	<INICIO><SepIzq>  //Palabra reservada de inicio
+	(sentencias())* // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
+	<SepDer><FIN><EOF> // Palabra reservada de cierre
+} 
+
+
+// EN ESTA AREA DEL CODIGO ESCRIBE LA GRAMÁTICA QUE PODRÍA RECONOCER EL ERROR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//MÉTODOS UTILIZADOS EN LA GRAMÁTICA DEL EJEMPLO, ERES LIBRE DE ALTERARLO PERO NO ES NECESARIO
+void sentencias():{ } 
+{ 
+LOOKAHEAD(2)   
+ // PuntoComa toen separado debido a la variabilidad del codigo
+(Declaracion()   // Declaracion de Variables k
+| Asignacion() //Asignacion de valores 
+| mostrar())* //metodo mostrar en pantalla
+<PuntoComa>
+}
+
+void Asignacion():{} 
+{ 
+	// //Diferentes formas de una asignacion de datos
+	<ID_CADENA> <IDENTIFICADOR> <ASIGNACION>(
+		LOOKAHEAD(<LEER> <PuntoComa>)
+		<LEER> <PuntoComa>
+	)
+}
+
+
+void Declaracion():{}
+{ 
+	<ID_CADENA> Asignacion() {System.out.println("Asignacion");}
+} 
+
+void mostrar():{}
+{
+    <ESCRIBIR> <ASIGNACION> <ParenIzq> <IDENTIFICADOR><ParenDer>
+}
