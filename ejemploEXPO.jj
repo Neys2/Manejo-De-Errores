@@ -8,12 +8,14 @@ options {
 PARSER_BEGIN(ejemploEXPO) 
 public class ejemploEXPO {  
 	String errormsg="\n";  
+	Token t;
 	public static void main(String args[])  { 
 		ejemploEXPO  compilador = new ejemploEXPO (System.in); 
 		try { 
 			compilador.Codigo(); 
-		}catch( Exception e ){   
-			System.out.println( "Expresión no válida" );
+		}catch( ParseException e ){ 
+			String msg = e.toString();  
+			System.out.println( "Expresión no válida "+msg);
 		}
 		catch( TokenMgrError e ) { 
 			System.out.println( "Error de Token" );
@@ -88,8 +90,9 @@ void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
 {
 (	LOOKAHEAD(2)
 	ErrorA()
-	| <INICIO><SepIzq>  //Palabra reservada de inicio
-	(sentencias())* // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
+	| 
+	<INICIO><SepIzq>  //Palabra reservada de inicio
+	sentencias() // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
 	<SepDer><FIN><EOF> )// Palabra reservada de cierre)
 	
 } 
@@ -97,16 +100,19 @@ void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
 
 // EN ESTA AREA DEL CODIGO ESCRIBE LA GRAMÁTICA QUE PODRÍA RECONOCER EL ERROR
 
-void ErrorA():{
-	System.out.println("#####################");
-	System.out.println("###### Error A ######");
-	System.out.println("#####################");
-	System.out.println("INICIO DE CODIGO FALTANTE: \"compilar_coatl{\" ");
-	System.out.println("#####################\n");
-} {
-	<INICIO>
-	(sentencias())* // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
+void ErrorA():{}
+{
+	<INICIO>error()
+	sentencias() // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
 	<SepDer><FIN><EOF>
+}
+
+void error():{}
+{
+	t = <UNKNOW>
+	{
+		errormsg = "Error sintáctico en la  línea "+String.valueOf(t.beginLine)+" columna "+String.valueOf(t.endColumn)+" se esperaba '{'\r\n";
+	}
 }
 
 
@@ -139,7 +145,7 @@ void Declaracion():{}
 
 void mostrar():{}
 {
-    <ESCRIBIR>  <ParenIzq> <IDENTIFICADOR> <ParenDer> <PuntoComa>
+    <ESCRIBIR>  <ParenIzq> (<IDENTIFICADOR>|<CADENAS>) <ParenDer> <PuntoComa>
 }
 
  
