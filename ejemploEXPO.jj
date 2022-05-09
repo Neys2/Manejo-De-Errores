@@ -54,7 +54,7 @@ TOKEN:
 
 TOKEN:  
 {  
-<ASIGNACION: ":"> {System.out.println("Asignacion de valor -->"+image);}
+<ASIGNACION: ":"> {System.out.println("Asignacion de valor --> "+image);}
 }   
 
 TOKEN: 
@@ -114,35 +114,20 @@ void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
 //MÉTODOS UTILIZADOS EN LA GRAMÁTICA DEL EJEMPLO, ERES LIBRE DE ALTERARLO PERO NO ES NECESARIO
 void sentencias():{ } 
 { 
-LOOKAHEAD(2)   
- // PuntoComa toen separado debido a la variabilidad del codigo
-(Declaracion()   // Declaracion de Variables k
-| Asignacion() //Asignacion de valores 
-| mostrar())* //metodo mostrar en pantalla
-<PuntoComa>
+// PuntoComa toen separado debido a la variabilidad del codigo
+Declaracion()   // Declaracion de Variables k
+| mostrar() //metodo mostrar en pantalla
+
 }
 
 void Declaracion():{}
 {  
-  Variable_dato() <IDENTIFICADOR> <ASIGNACION>  <CADENAS> <PuntoComa>  
+	<ID_CADENA> <IDENTIFICADOR> <ASIGNACION>  <CADENAS> <PuntoComa>  
 } 
 
-  
- 
 void mostrar():{}
 {
     <ESCRIBIR>  <ParenIzq> <IDENTIFICADOR> <ParenDer> <PuntoComa>
 }
 
-void DataType():{} 
-{ //Tipos de datos  
-<NUMERO> |<NUMDECIMAL> | <EST_LOGIC>|<CADENAS> 
-} 
-
-void Variable_dato():{} 
-{ //Tipo del dato de la variable del dato a la hora de su declaracion
-<ENTERO>   
-|<FLOTANTE>   
-|<ID_CADENA>   
-|<BOOLEANO>  
-} 
+ 

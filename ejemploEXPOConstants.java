@@ -9,31 +9,35 @@ public interface ejemploEXPOConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int INICIO = 1;
+  int INICIO = 4;
   /** RegularExpression Id. */
-  int FIN = 2;
+  int FIN = 5;
   /** RegularExpression Id. */
-  int ESCRIBIR = 3;
+  int ESCRIBIR = 6;
   /** RegularExpression Id. */
-  int LEER = 4;
+  int LEER = 7;
   /** RegularExpression Id. */
-  int ASIGNACION = 5;
+  int ParenIzq = 8;
   /** RegularExpression Id. */
-  int ParenIzq = 6;
+  int ParenDer = 9;
   /** RegularExpression Id. */
-  int ParenDer = 7;
+  int SepIzq = 10;
   /** RegularExpression Id. */
-  int SepIzq = 8;
+  int SepDer = 11;
   /** RegularExpression Id. */
-  int SepDer = 9;
+  int PuntoComa = 12;
   /** RegularExpression Id. */
-  int PuntoComa = 10;
+  int COMA = 13;
   /** RegularExpression Id. */
-  int CADENAS = 11;
+  int ASIGNACION = 14;
   /** RegularExpression Id. */
-  int IDENTIFICADOR = 12;
+  int CADENAS = 15;
   /** RegularExpression Id. */
-  int ID_CADENA = 13;
+  int ID_CADENA = 16;
+  /** RegularExpression Id. */
+  int IDENTIFICADOR = 17;
+  /** RegularExpression Id. */
+  int UNKNOW = 18;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -41,19 +45,24 @@ public interface ejemploEXPOConstants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
+    "<token of kind 1>",
+    "<token of kind 2>",
+    "<token of kind 3>",
     "\"compilar_coatl\"",
     "\"ejecutar_coatl\"",
     "\"muestra\"",
     "\"recibir\"",
-    "\":\"",
     "\"(\"",
     "\")\"",
     "\"{\"",
     "\"}\"",
     "\";\"",
+    "\",\"",
+    "\":\"",
     "<CADENAS>",
-    "<IDENTIFICADOR>",
     "\"C_\"",
+    "<IDENTIFICADOR>",
+    "<UNKNOW>",
   };
 
 }
