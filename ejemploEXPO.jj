@@ -86,16 +86,28 @@ TOKEN:
 
 void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
 {
-	<INICIO><SepIzq>  //Palabra reservada de inicio
+(	LOOKAHEAD(2)
+	ErrorA()
+	| <INICIO><SepIzq>  //Palabra reservada de inicio
 	(sentencias())* // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
-	<SepDer><FIN><EOF> // Palabra reservada de cierre
+	<SepDer><FIN><EOF> )// Palabra reservada de cierre)
+	
 } 
 
 
 // EN ESTA AREA DEL CODIGO ESCRIBE LA GRAMÁTICA QUE PODRÍA RECONOCER EL ERROR
 
-
-
+void ErrorA():{
+	System.out.println("#####################");
+	System.out.println("###### Error A ######");
+	System.out.println("#####################");
+	System.out.println("INICIO DE CODIGO FALTANTE: \"compilar_coatl{\" ");
+	System.out.println("#####################\n");
+} {
+	<INICIO>
+	(sentencias())* // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
+	<SepDer><FIN><EOF>
+}
 
 
 
