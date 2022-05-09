@@ -8,7 +8,7 @@ public class ejemploEXPO implements ejemploEXPOConstants {
                         compilador.Codigo();
                 }catch( ParseException e ){
                         String msg = e.toString();
-                        System.out.println( "Expresi\u00f3n no v\u00e1lida "+msg);
+                        System.out.println( "Expresi\u00c3\u00b3n no v\u00c3\u00a1lida "+msg);
                 }
                 catch( TokenMgrError e ) {
                         System.out.println( "Error de Token" );
@@ -38,10 +38,12 @@ public class ejemploEXPO implements ejemploEXPOConstants {
     }
   }
 
-// EN ESTA AREA DEL CODIGO ESCRIBE LA GRAM√ÅTICA QUE PODR√çA RECONOCER EL ERROR
+// EN ESTA AREA DEL CODIGO ESCRIBE LA GRAM√?TICA QUE PODR√?A RECONOCER EL ERROR
   final public void ErrorA() throws ParseException {
+        Token t;
     jj_consume_token(INICIO);
-    error();
+                         // {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
+        errormsg = "Error sint"+"\u00e1"+"ctico en la  l"+"\u00ed"+"nea "+String.valueOf(getToken(1).beginLine)+" columna "+String.valueOf(getToken(1).endColumn)+" se esperaba '{'\r\n";
     sentencias();
     jj_consume_token(SepDer);
     jj_consume_token(FIN);
@@ -49,11 +51,12 @@ public class ejemploEXPO implements ejemploEXPOConstants {
   }
 
   final public void error() throws ParseException {
-    t = jj_consume_token(UNKNOW);
-                errormsg = "Error sint\u00e1ctico en la  l\u00ednea "+String.valueOf(t.beginLine)+" columna "+String.valueOf(t.endColumn)+" se esperaba '{'\r\n";
+    t = jj_consume_token(INICIO);
+         // {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
+                errormsg = "Error sint\u00c3\u00a1ctico en la  l\u00c3\u00adnea "+String.valueOf(getToken(0).beginLine)+" columna "+String.valueOf(getToken(0).endColumn)+" se esperaba '{'\r\n";
   }
 
-//M√âTODOS UTILIZADOS EN LA GRAM√ÅTICA DEL EJEMPLO, ERES LIBRE DE ALTERARLO PERO NO ES NECESARIO
+//M√âTODOS UTILIZADOS EN LA GRAM√?TICA DEL EJEMPLO, ERES LIBRE DE ALTERARLO PERO NO ES NECESARIO
   final public void sentencias() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ID_CADENA:
@@ -103,19 +106,44 @@ public class ejemploEXPO implements ejemploEXPOConstants {
     finally { jj_save(0, xla); }
   }
 
+  private boolean jj_3R_3() {
+    if (jj_3R_5()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_2() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_3()) {
+    jj_scanpos = xsp;
+    if (jj_3R_4()) return true;
+    }
+    return false;
+  }
+
   private boolean jj_3R_1() {
     if (jj_scan_token(INICIO)) return true;
     if (jj_3R_2()) return true;
     return false;
   }
 
-  private boolean jj_3_1() {
-    if (jj_3R_1()) return true;
+  private boolean jj_3R_6() {
+    if (jj_scan_token(ESCRIBIR)) return true;
     return false;
   }
 
-  private boolean jj_3R_2() {
-    if (jj_scan_token(UNKNOW)) return true;
+  private boolean jj_3R_5() {
+    if (jj_scan_token(ID_CADENA)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_4() {
+    if (jj_3R_6()) return true;
+    return false;
+  }
+
+  private boolean jj_3_1() {
+    if (jj_3R_1()) return true;
     return false;
   }
 
