@@ -40,7 +40,6 @@ public class ejemploEXPO implements ejemploEXPOConstants {
 
 // EN ESTA AREA DEL CODIGO ESCRIBE LA GRAMÃ?TICA QUE PODRÃ?A RECONOCER EL ERROR
   final public void ErrorA() throws ParseException {
-        Token t;
     jj_consume_token(INICIO);
                          // {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
         errormsg = "Error sint"+"\u00e1"+"ctico en la  l"+"\u00ed"+"nea "+String.valueOf(getToken(1).beginLine)+" columna "+String.valueOf(getToken(1).endColumn)+" se esperaba '{'\r\n";
@@ -48,12 +47,6 @@ public class ejemploEXPO implements ejemploEXPOConstants {
     jj_consume_token(SepDer);
     jj_consume_token(FIN);
     jj_consume_token(0);
-  }
-
-  final public void error() throws ParseException {
-    t = jj_consume_token(INICIO);
-         // {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
-                errormsg = "Error sint\u00c3\u00a1ctico en la  l\u00c3\u00adnea "+String.valueOf(getToken(0).beginLine)+" columna "+String.valueOf(getToken(0).endColumn)+" se esperaba '{'\r\n";
   }
 
 //MÃ‰TODOS UTILIZADOS EN LA GRAMÃ?TICA DEL EJEMPLO, ERES LIBRE DE ALTERARLO PERO NO ES NECESARIO
@@ -137,13 +130,13 @@ public class ejemploEXPO implements ejemploEXPOConstants {
     return false;
   }
 
-  private boolean jj_3R_4() {
-    if (jj_3R_6()) return true;
+  private boolean jj_3_1() {
+    if (jj_3R_1()) return true;
     return false;
   }
 
-  private boolean jj_3_1() {
-    if (jj_3R_1()) return true;
+  private boolean jj_3R_4() {
+    if (jj_3R_6()) return true;
     return false;
   }
 

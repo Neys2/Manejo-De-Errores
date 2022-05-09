@@ -100,8 +100,7 @@ void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
 
 // EN ESTA AREA DEL CODIGO ESCRIBE LA GRAMÁTICA QUE PODRÍA RECONOCER EL ERROR
 
-void ErrorA():{
-	Token t;
+void ErrorA():{ 
 }
 {
 	<INICIO>	{// {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
@@ -111,19 +110,7 @@ void ErrorA():{
 	<SepDer><FIN><EOF>
 }
 
-void error():{}
-{
-	t = <INICIO>
-	{// {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
-		errormsg = "Error sintáctico en la  línea "+String.valueOf(getToken(0).beginLine)+" columna "+String.valueOf(getToken(0).endColumn)+" se esperaba '{'\r\n";
-	
-		}
-}
-
-
-
-
-
+ 
 
 
 
