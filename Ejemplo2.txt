@@ -1,4 +1,4 @@
-compilar_coatl
+compilar_coatl{
 
 	muestra("Hola mundo");
 

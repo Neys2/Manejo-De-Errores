@@ -21,7 +21,7 @@ public class ejemploEXPO {
 			System.out.println( "Error de Token" );
 		} 
 		System.out.println(compilador.errormsg);
-		 System.out.println("An"+"\u00e1"+"lisis l"+"\u00e9"+"xico ejecutado con "+"\u00e9"+"xito");  
+		//System.out.println("An"+"\u00e1"+"lisis l"+"\u00e9"+"xico ejecutado con "+"\u00e9"+"xito");  
 	}    
 }   
 PARSER_END(ejemploEXPO)
@@ -103,8 +103,9 @@ void Codigo():{} // Gramatica inicial que contiene el cuerpo basico del codigo
 void ErrorA():{ 
 }
 {
-	<INICIO>	{// {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
-	errormsg = "Error sint"+"\u00e1"+"ctico en la  l"+"\u00ed"+"nea "+String.valueOf(getToken(1).beginLine)+" columna "+String.valueOf(getToken(1).endColumn)+" se esperaba '{'\r\n";
+	<INICIO>	{
+	int columna = getToken(0).endColumn + 1;// {throw new ParseException("Expected B, found " + getToken(0).image + ".");}
+	errormsg = "\nError sint"+"\u00e1"+"ctico en la  l"+"\u00ed"+"nea "+String.valueOf(getToken(0).beginLine)+" columna "+String.valueOf(columna)+" se esperaba '{'\r\n";
 	}
 	sentencias() // Conjunto de sentencias tipo; declaraciones, ciclos, decisiones, etc
 	<SepDer><FIN><EOF>
